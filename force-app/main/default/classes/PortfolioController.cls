@@ -6,6 +6,7 @@ public with sharing class PortfolioController {
         processInputData(inputMessage);
 
         // Send email to the recipient
+        //test
         sendEmail(inputFirstName, inputLastName, inputEmail, inputSubject, inputMessage);
     }
 
