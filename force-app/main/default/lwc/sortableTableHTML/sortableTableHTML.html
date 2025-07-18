@@ -1,0 +1,87 @@
+<template>
+    <div class="slds-grid">
+        <div class="slds-col slds-size_1-of-1 Defect Cases" if:true={viewVertical}>
+            <!-- Table -->
+            <table class="vertical-table" if:false={isLoading}>
+                <thead>
+                    <tr class="vertical-table-header">
+                        <th data-id="Priority" onclick={handleSortTableNewFeature}>Priority
+                            <lightning-icon icon-name="utility:arrowup" size="x-small" if:true={arrowUpPriority}></lightning-icon>
+                            <lightning-icon icon-name="utility:arrowdown" size="x-small" if:true={arrowDownPriority}></lightning-icon>
+                        </th>
+                        <th data-id="Status" onclick={handleSortTableNewFeature}>Status
+                            <lightning-icon icon-name="utility:arrowup" size="x-small" if:true={arrowUpStatus}></lightning-icon>
+                            <lightning-icon icon-name="utility:arrowdown" size="x-small" if:true={arrowDownStatus}></lightning-icon>
+                        </th>
+                        <th data-id="CaseNumber" onclick={handleSortTableNewFeature}>Ticket Number
+                            <lightning-icon icon-name="utility:arrowup" size="x-small" if:true={arrowUpCaseNumber}></lightning-icon>
+                            <lightning-icon icon-name="utility:arrowdown" size="x-small" if:true={arrowDownCaseNumber}></lightning-icon>
+                        </th>
+                        <th data-id="CaseSubject" onclick={handleSortTableNewFeature}>Title
+                            <lightning-icon icon-name="utility:arrowup" size="x-small" if:true={arrowUpCaseSubject}></lightning-icon>
+                            <lightning-icon icon-name="utility:arrowdown" size="x-small" if:true={arrowDownCaseSubject}></lightning-icon>
+                        </th>
+                        <th data-id="assigneeAbbr" onclick={handleSortTableNewFeature}>Assigned To
+                            <lightning-icon icon-name="utility:arrowup" size="x-small" if:true={arrowUpassigneeAbbr}></lightning-icon>
+                            <lightning-icon icon-name="utility:arrowdown" size="x-small" if:true={arrowDownassigneeAbbr}></lightning-icon>
+                        </th>
+                        <th data-id="CreatedDateFormatted" onclick={handleSortTableNewFeature} style="white-space: nowrap;">Date opened
+                            <lightning-icon icon-name="utility:arrowup" size="x-small" if:true={arrowUpCreatedDateFormatted}></lightning-icon>
+                            <lightning-icon icon-name="utility:arrowdown" size="x-small" if:true={arrowDownCreatedDateFormatted}></lightning-icon>
+                        </th>
+                        <th data-id="ModifiedDateFormatted" onclick={handleSortTableNewFeature} style="white-space: nowrap;">Date modified
+                            <lightning-icon icon-name="utility:arrowup" size="x-small" if:true={arrowUpModifiedDateFormatted}></lightning-icon>
+                            <lightning-icon icon-name="utility:arrowdown" size="x-small" if:true={arrowDownModifiedDateFormatted}></lightning-icon>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody if:true={hasCaseList} class="table-body">
+                    <template for:each={caseList} for:item="caseDetail">
+                    <tr class="table-row" key={caseDetail.CaseNumber}>
+                        <td class="ranking-pill">
+                            <span class={caseDetail.pillSeverityCss}>{caseDetail.Priority}</span>
+                        </td>
+                        <td class="status-pill">
+                            <span class="colorless-pill">{caseDetail.Status}</span>
+                        </td>
+                        <td>{caseDetail.CaseNumber}</td>
+                        <td class="title-row">
+                            <div class="overflow-subject-fade">
+                                <a class="table-hyperlink" onclick={handleSubjectClick} data-id={caseDetail.Id}>{caseDetail.CaseSubject}</a>
+                            </div>
+                            <!-- <div class="case-reason">
+                                <p>Case reason lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris quis ipsum pharetra, vehicula nisl ac, commodo tortor.</p>
+                            </div> -->
+                        </td>
+                        <td>
+                            <div class="user-icon-container">
+                                <span class="user-icon">{caseDetail.assigneeAbbr}</span>
+                            </div>
+                        </td>
+                        <td class="overflow-date">
+                            <span>{caseDetail.CreatedDateFormatted}</span>
+                        </td>
+                        <td class="overflow-date">
+                            <span>{caseDetail.ModifiedDateFormatted}</span>
+                        </td>
+                    </tr>
+                    </template>
+                </tbody>
+                <tbody if:false={hasCaseList}>
+                    <tr class="load-more-container">
+                        <td colspan="6">
+                            <a class="load-more" onclick={handleLoadMore}>There are no records to show</a>
+                        </td>
+                    </tr>
+                </tbody>
+                <tbody if:true={showLoadMore}>
+                    <tr class="load-more-container">
+                        <td colspan="6">
+                            <a class="load-more" onclick={handleLoadMore}>Load More</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</template>
